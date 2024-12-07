@@ -65,19 +65,21 @@ class Game:
         print(result)
 
         # Обработка результата:
-        if "wins" in result and self.player.score <= 21:
+        if result == f"{self.player.name} wins!":
             if self.player.score == 21 and len(self.player.hand) == 2:
-                self.player.balance += 1.5 * 10  # Блэкджек (выигрыш 1.5x ставки)
+                self.player.balance += 15  # Блэкджек (выигрыш 1.5x ставки)
             else:
-                self.player.balance += 10  # Победа, ставка возвращается
-        elif "busts" in result:
-            self.player.balance -= 10  # Проигрыш, ставка теряется
-        elif "draw" in result:
+                self.player.balance += 10  # Обычная победа
+        elif result == f"{self.player.name} busts!" or result == "Dealer wins!":
+            self.player.balance -= 10  # Проигрыш игрока
+        elif result == "Dealer busts!":
+            self.player.balance += 10
+        elif result == "It's a draw!":
             pass  # Ничья, баланс не изменяется
 
         print(f"{self.player.name}'s balance: {self.player.balance}")
-        
-        # Если игрок не имеет достаточно средств для следующего раунда, игра заканчивается
+
+        # Если баланс игрока опустился до 0 или ниже, игра заканчивается
         if self.player.balance <= 0:
             print(f"\n{self.player.name} is out of money! Game over.")
             self.is_game_over = True
@@ -85,6 +87,7 @@ class Game:
 
         # Предлагаем начать новый раунд
         self.ask_for_new_round()
+
 
 
     def ask_for_new_round(self):

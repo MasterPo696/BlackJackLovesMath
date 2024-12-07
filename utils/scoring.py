@@ -7,15 +7,14 @@ def calculate_score(hand):
         aces -= 1
     return score
 
-# Определение победителя
 def determine_winner(player, dealer):
     if player.score > 21:
-        return f"{player.name} busts! Dealer wins."
+        return f"{player.name} busts!"
     elif dealer.score > 21:
-        return f"Dealer busts! {player.name} wins."
+        return "Dealer busts!"
     elif player.score > dealer.score:
-        return f"{player.name} wins."
+        return f"{player.name} wins!"
     elif player.score < dealer.score:
-        return "Dealer wins."
+        return "Dealer wins!"
     else:
-        return "It's a draw."
+        return "It's a draw!"
